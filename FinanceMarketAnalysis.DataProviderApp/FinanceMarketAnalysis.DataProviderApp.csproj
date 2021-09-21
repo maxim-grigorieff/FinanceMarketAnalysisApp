@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <OutputPath>..\Binaries\Debug</OutputPath>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <OutputPath>..\Binaries\Release</OutputPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FinanceMarketAnalysis.Common\FinanceMarketAnalysis.Common.csproj" />
+    <ProjectReference Include="..\FinanceMarketAnalysis.DataModel\FinanceMarketAnalysis.DataModel.csproj" />
+    <ProjectReference Include="..\FinanceMarketAnalysis.DataProvider\FinanceMarketAnalysis.DataProvider.csproj" />
+    <ProjectReference Include="..\FinanceMarketAnalysis.Store\FinanceMarketAnalysis.Store.csproj" />
+  </ItemGroup>
+
+</Project>
