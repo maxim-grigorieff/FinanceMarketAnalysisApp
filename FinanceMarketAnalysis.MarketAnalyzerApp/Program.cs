@@ -16,7 +16,9 @@ namespace FinanceMarketAnalysis.MarketAnalyzerApp
 
         static void Main(string[] args)
         {
-            Console.WriteLine("Start analyze market stocks...");
+            Trace.Listeners.Add(new ConsoleTraceListener());
+
+            Trace.WriteLine("Start analyze market stocks...");
             try
             {
                 using (new StopWatchDiagnostic())

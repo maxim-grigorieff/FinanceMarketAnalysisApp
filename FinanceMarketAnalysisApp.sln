@@ -13,11 +13,17 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinanceMarketAnalysis.Marke
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinanceMarketAnalysis.Common", "FinanceMarketAnalysis.Common\FinanceMarketAnalysis.Common.csproj", "{A41ECDED-4077-4A21-9A06-621044A1F003}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinanceMarketAnalysis.Store", "FinanceMarketAnalysis.Store\FinanceMarketAnalysis.Store.csproj", "{73EDDA00-0055-4E4E-8724-C6E52338FF05}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinanceMarketAnalysis.Store", "FinanceMarketAnalysis.Store\FinanceMarketAnalysis.Store.csproj", "{73EDDA00-0055-4E4E-8724-C6E52338FF05}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinanceMarketAnalysis.DataProviderApp", "FinanceMarketAnalysis.DataProviderApp\FinanceMarketAnalysis.DataProviderApp.csproj", "{BDEC0AE0-0399-4483-8118-391E90747C02}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinanceMarketAnalysis.DataProviderApp", "FinanceMarketAnalysis.DataProviderApp\FinanceMarketAnalysis.DataProviderApp.csproj", "{BDEC0AE0-0399-4483-8118-391E90747C02}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinanceMarketAnalysis.MarketAnalyzerApp", "FinanceMarketAnalysis.MarketAnalyzerApp\FinanceMarketAnalysis.MarketAnalyzerApp.csproj", "{D39F25C9-B9CB-42B5-AA1F-EC99D56EDF5D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinanceMarketAnalysis.MarketAnalyzerApp", "FinanceMarketAnalysis.MarketAnalyzerApp\FinanceMarketAnalysis.MarketAnalyzerApp.csproj", "{D39F25C9-B9CB-42B5-AA1F-EC99D56EDF5D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinanceMarketAnalysis.MarketAnalyzerWebApp", "FinanceMarketAnalysis.MarketAnalyzerWebApp\FinanceMarketAnalysis.MarketAnalyzerWebApp.csproj", "{8A26E716-3D64-4FB4-95ED-D272F095C46B}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{C06F59DE-3154-4664-83FC-5E9E3F21AB6D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinanceMarketAnalysis.MarketAnalyzerWebApi", "FinanceMarketAnalysis.MarketAnalyzerWebApi\FinanceMarketAnalysis.MarketAnalyzerWebApi.csproj", "{550DB19F-E95E-4406-9E10-F7115119D54F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -57,6 +63,18 @@ Global
 		{D39F25C9-B9CB-42B5-AA1F-EC99D56EDF5D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D39F25C9-B9CB-42B5-AA1F-EC99D56EDF5D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D39F25C9-B9CB-42B5-AA1F-EC99D56EDF5D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8A26E716-3D64-4FB4-95ED-D272F095C46B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8A26E716-3D64-4FB4-95ED-D272F095C46B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8A26E716-3D64-4FB4-95ED-D272F095C46B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8A26E716-3D64-4FB4-95ED-D272F095C46B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C06F59DE-3154-4664-83FC-5E9E3F21AB6D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C06F59DE-3154-4664-83FC-5E9E3F21AB6D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C06F59DE-3154-4664-83FC-5E9E3F21AB6D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C06F59DE-3154-4664-83FC-5E9E3F21AB6D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{550DB19F-E95E-4406-9E10-F7115119D54F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{550DB19F-E95E-4406-9E10-F7115119D54F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{550DB19F-E95E-4406-9E10-F7115119D54F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{550DB19F-E95E-4406-9E10-F7115119D54F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

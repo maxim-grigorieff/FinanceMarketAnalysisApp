@@ -3,6 +3,7 @@ using FinanceMarketAnalysis;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
@@ -19,7 +20,7 @@ namespace FinanceMarketAnalysis
         }
 
         private const string BaseUri = "https://financialmodelingprep.com/api/v3/";
-        private const string ApiKey  = "a9ebdae81a31004e2c7fc76943457e13";
+        private const string ApiKey = "a9ebdae81a31004e2c7fc76943457e13";
 
         private readonly Lazy<HttpClient> HttpClientProxy = new(new HttpClient());
         private ILogger Logger { get; }
@@ -88,19 +89,51 @@ namespace FinanceMarketAnalysis
             using var responseStream = await response.Content.ReadAsStreamAsync();
             Logger.TraceInformation($"Request {requestUri} completed.");
 
-            return await JsonSerializer.DeserializeAsync<ModelType>(responseStream, new JsonSerializerOptions { IgnoreNullValues = true });
+            return await ReadModel<ModelType>(responseStream);
         }
 
+        private async Task<ModelType> ReadModel<ModelType>(Stream stream)
+        {
+            try
+            {
+                return await JsonSerializer.DeserializeAsync<ModelType>(stream, new JsonSerializerOptions { IgnoreNullValues = true });
+            }
+            catch (Exception exc)
+            {
+                var result = await TryParseFreeApiConstraints(stream);
+                if (result)
+                {
+                    throw new FreeApiConstraintFinanceDataReaderException(exc);
+                }
+                throw;
+            }
+        }
+
+        private async Task<bool> TryParseFreeApiConstraints(Stream stream)
+        {
+            try
+            {
+                stream.Position = 0;
+                var response = await JsonSerializer.DeserializeAsync<FreeApiConstraintModel>(stream, new JsonSerializerOptions { IgnoreNullValues = true });
+                return true;    
+            }
+            catch (Exception exc)
+            {
+                Trace.TraceError($"Unable to parse json. Error: {exc.Message}");
+                return false;
+            }
+
+        }
 
         public async Task<HistoricalDividendsRootobjectModel> ReadHistoricalDividendsAsync(string symbol)
         {
             return await InternalReadAsync<HistoricalDividendsRootobjectModel>(GetHistoricalDividendsUri(symbol));
-           // using var request = new HttpRequestMessage(new HttpMethod("GET"), GetHistoricalDividendsUri(symbol));
-           // request.Headers.TryAddWithoutValidation("Upgrade-Insecure-Requests", "1");
-           // var response = await HttpClientProxy.Value.SendAsync(request);
-           // response.EnsureSuccessStatusCode();
+            // using var request = new HttpRequestMessage(new HttpMethod("GET"), GetHistoricalDividendsUri(symbol));
+            // request.Headers.TryAddWithoutValidation("Upgrade-Insecure-Requests", "1");
+            // var response = await HttpClientProxy.Value.SendAsync(request);
+            // response.EnsureSuccessStatusCode();
 
-           //return await response.Content.ReadAsStringAsync();
+            //return await response.Content.ReadAsStringAsync();
         }
 
         public async Task<IEnumerable<CompanyKeyMetricsModel>> ReadCompanyKeyMetricsAsync(string symbol)

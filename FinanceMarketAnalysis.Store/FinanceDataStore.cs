@@ -13,13 +13,15 @@ namespace FinanceMarketAnalysis
         public FinanceDataStore(ILogger logger)
         {
             Logger = logger;
+            EnvVariableReader = new EnvironmentVariableReader();
         }
 
         private const string DirectoryName = "StockDataRepository";
         private const string FileExtension = ".json";
 
-        private string DirectoryPath => $"{Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), DirectoryName)}";
+        private string DirectoryPath => $"{EnvVariableReader.StockDataRepositoryPath}";
         private ILogger Logger { get; }
+        private IEnvironmentVariableReader EnvVariableReader { get; }
 
         private string ConvertToFileName(string symbol)
         {

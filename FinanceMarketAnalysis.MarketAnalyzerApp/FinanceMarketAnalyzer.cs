@@ -9,14 +9,10 @@ namespace FinanceMarketAnalysis.MarketAnalyzerApp
         public FinanceMarketAnalyzer()
         {
             Logger = new Logger();
-            DataReader = new FinanceDataReader(Logger);
-            Sp500DataReader = new Sp500ListDataReader(Logger);
             FinanceDataStore = new FinanceDataStore(Logger);
         }
 
         private readonly ILogger Logger;
-        private readonly IFinanceDataApiReader DataReader;
-        private readonly ISp500ListDataReader Sp500DataReader;
         private readonly IFinanceDataStore FinanceDataStore;
 
         public async Task<IEnumerable<StockDataDescriptor>> AnalyzeAsync()

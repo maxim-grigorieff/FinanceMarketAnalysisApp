@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "FinanceMarketAnalysis.MarketAnalyzerApp": {
+      "commandName": "Project"
+    },
+    "Docker": {
+      "commandName": "Docker"
+    }
+  }
+}
