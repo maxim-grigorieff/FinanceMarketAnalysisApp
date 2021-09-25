@@ -20,4 +20,6 @@ steps:
     containerregistrytype: 'Container Registry'
     dockerRegistryEndpoint: 'Docker hub connection'
     dockerComposeFile: '**/docker-compose.yml'
-    action: 'Build services'
+    action: 'Push services'
+    qualifyImageNames: true
+    additionalImageTags: $(Build.BuildId)
