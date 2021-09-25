@@ -21,8 +21,8 @@ steps:
     dockerRegistryEndpoint: 'Docker hub connection'
     dockerComposeFile: '**/docker-compose.yml'
     action: 'Build services'
-    qualifyImageNames: true
-    additionalImageTags: $(Build.BuildId)
+   # qualifyImageNames: true
+   # additionalImageTags: $(Build.BuildId)
     
 - task: DockerCompose@0
   inputs:
@@ -30,6 +30,6 @@ steps:
     dockerRegistryEndpoint: 'Docker hub connection'
     dockerComposeFile: '**/docker-compose.yml'
     action: Push services
-    qualifyImageNames: true
-    additionalImageTags: $(Build.BuildId)
+  #  qualifyImageNames: true
+  #  additionalImageTags: $(Build.BuildId)
   
