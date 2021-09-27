@@ -31,6 +31,11 @@ namespace FinanceMarketAnalysis.MarketAnalyzerApp
 
         private bool ValidateMarketPositiveIndicator(StockDataDescriptor stockDataDescriptor)
         {
+            if (!MarketPositiveIndicatorFactory.Validate(stockDataDescriptor))
+            {
+                return false;
+            }
+
             var marketPositiveIndicator = MarketPositiveIndicatorFactory.Create(stockDataDescriptor);
             return marketPositiveIndicator.IsPositive();
         }

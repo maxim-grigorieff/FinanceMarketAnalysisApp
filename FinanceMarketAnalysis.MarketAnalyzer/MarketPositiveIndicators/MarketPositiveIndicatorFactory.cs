@@ -19,6 +19,13 @@ namespace FinanceMarketAnalysis
             return financeStatements.OrderByDescending(financeStatement => DateTime.Parse(financeStatement.date));
         }
 
+        public static bool Validate(StockDataDescriptor inputData)
+        {
+            return inputData.CompanyKeyMetrics.Any() && 
+                   inputData.FinanceStatements.Any() && 
+                   (inputData.HistoricalDividends.historical?.Any() ?? false);
+        }
+
         public static IMarketPositiveIndicator Create(StockDataDescriptor inputData)
         {
             return new MarketPositiveIndicators(new IMarketPositiveIndicator[] 
