@@ -4,14 +4,16 @@ using System.Reflection;
 
 namespace FinanceMarketAnalysis
 {
-    internal interface IEnvironmentVariableReader
+    public interface IEnvironmentVariableReader
     {
+        string ApiKey { get; }
         string StockDataRepositoryPath { get; }
     }
 
-    internal class EnvironmentVariableReader : IEnvironmentVariableReader
+    public class EnvironmentVariableReader : IEnvironmentVariableReader
     {
         private const string StockDataRepoEnvName = "STOCK_DATA_REPOSITORY";
+        private const string FmpApiKeyEnvName = "FMP_API_KEY";
 
         private const string DirectoryName = @"FinanceMarketAnalysisApp\StockDataRepository";
         //private string DirectoryPath => $"{Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), DirectoryName)}";
@@ -26,5 +28,7 @@ namespace FinanceMarketAnalysis
             }
 
         }
+
+        public string ApiKey => Environment.GetEnvironmentVariable(FmpApiKeyEnvName);
     }
 }

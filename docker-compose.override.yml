@@ -10,7 +10,7 @@ services:
       - "443"
     volumes:
       - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
-  financemarketanalysis.dataproviderapp:
+#  financemarketanalysis.dataproviderapp:
 
 
   #financemarketanalysis.marketanalyzerapp:

@@ -14,16 +14,17 @@ namespace FinanceMarketAnalysis
 
     public class FinanceDataReader : IFinanceDataApiReader
     {
-        public FinanceDataReader(ILogger logger)
+        public FinanceDataReader(ILogger logger, string apiKey)
         {
             Logger = logger;
+            ApiKey = apiKey;
         }
 
         private const string BaseUri = "https://financialmodelingprep.com/api/v3/";
-        private const string ApiKey = "a9ebdae81a31004e2c7fc76943457e13";
 
         private readonly Lazy<HttpClient> HttpClientProxy = new(new HttpClient());
         private ILogger Logger { get; }
+        private string  ApiKey { get; }
 
         private string GetStockListUri()
         {

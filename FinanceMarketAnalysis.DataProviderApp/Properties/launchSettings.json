@@ -1,7 +1,10 @@
 {
   "profiles": {
     "FinanceMarketAnalysis.DataProviderApp": {
-      "commandName": "Project"
+      "commandName": "Project",
+      "environmentVariables": {
+        "FMP_API_KEY": "a9ebdae81a31004e2c7fc76943457e13"
+      }
     },
     "Docker": {
       "commandName": "Docker"

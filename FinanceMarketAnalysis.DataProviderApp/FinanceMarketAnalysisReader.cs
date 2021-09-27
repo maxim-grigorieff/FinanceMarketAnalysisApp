@@ -11,8 +11,9 @@ namespace FinanceMarketAnalysis
     {
         public FinanceMarketAnalysisReader()
         {
+            EnvVariableReader = new EnvironmentVariableReader();
             Logger = new Logger();
-            DataReader = new FinanceDataReader(Logger);
+            DataReader = new FinanceDataReader(Logger, EnvVariableReader.ApiKey);
             Sp500DataReader = new Sp500ListDataReader(Logger);
             FinanceDataStore = new FinanceDataStore(Logger);
         }
@@ -21,6 +22,7 @@ namespace FinanceMarketAnalysis
         private readonly IFinanceDataApiReader DataReader;
         private readonly ISp500ListDataReader Sp500DataReader;
         private readonly IFinanceDataStore    FinanceDataStore;
+        private readonly IEnvironmentVariableReader EnvVariableReader;
 
         public async Task Read()
         {
@@ -47,7 +49,7 @@ namespace FinanceMarketAnalysis
             var storeStocks = ReadStockCacheAsync().Result;
             var sp500List   = Sp500DataReader.ReadSp500StocksAsync().Result;
 
-            return sp500List.Except(storeStocks).Take(20);
+            return sp500List.Except(storeStocks);
         }
 
         private async Task<IEnumerable<string>> ReadStockCacheAsync()
