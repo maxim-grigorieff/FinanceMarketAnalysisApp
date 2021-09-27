@@ -1,0 +1,48 @@
+version: '3.4'
+  
+
+volumes:
+  stockdatarepository:
+
+services:
+  financemarketanalysis.marketanalyzerwebapp:
+    image: ${DOCKER_REGISTRY-}financemarketanalysismarketanalyzerwebapp
+    build:
+      context: .
+      dockerfile: FinanceMarketAnalysis.MarketAnalyzerWebApp/Dockerfile
+
+  financemarketanalysis.dataproviderapp:
+    image: ${DOCKER_REGISTRY-}financemarketanalysisdataproviderapp
+    build:
+      context: .
+      dockerfile: FinanceMarketAnalysis.DataProviderApp/Dockerfile
+    env_file: variables.env
+    volumes:
+        - stockdatarepository:/stockdatarepository
+
+  #financemarketanalysis.marketanalyzerapp:
+  #  image: ${DOCKER_REGISTRY-}financemarketanalysismarketanalyzerapp
+  #  build:
+  #    context: .
+  #    dockerfile: FinanceMarketAnalysis.MarketAnalyzerApp/Dockerfile
+  #  env_file: variables.env
+  #  volumes:
+  #    - ${PROGRAMDATA}/FinanceMarketAnalysisApp/StockDataRepository:/stockdatarepository
+
+
+  #dockerconsoleapp:
+  #  image: ${DOCKER_REGISTRY-}dockerconsoleapp
+  #  build:
+  #    context: .
+  #    dockerfile: DockerConsoleApp/Dockerfile
+  #  env_file: variables.env
+
+  financemarketanalysis.marketanalyzerwebapi:
+    image: ${DOCKER_REGISTRY-}financemarketanalysismarketanalyzerwebapi
+    build:
+      context: .
+      dockerfile: FinanceMarketAnalysis.MarketAnalyzerWebApi/Dockerfile
+    env_file: variables.env
+    volumes:
+        - stockdatarepository:/stockdatarepository
+
