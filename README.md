@@ -1,20 +1,58 @@
-# Introduction 
-TODO: Give a short introduction of your project. Let this section explain the objectives or the motivation behind this project. 
+# Цель
+Проект, основной целью которого является демонстрация навыков кодирования на платформе .Net Core, проектирования микросервисов, использования платформ Docker и Kubernetes.
 
-# Getting Started
-TODO: Guide users through getting your code up and running on their own system. In this section you can talk about:
-1.	Installation process
-2.	Software dependencies
-3.	Latest releases
-4.	API references
+Задачей приложения является автоматизация выбора акций стоимости(value shares) из списка [S&P 500](https://en.wikipedia.org/wiki/S%26P_500) согласно стратегии стоимостного инвестирования [Бенджамина Грэма](https://ru.wikipedia.org/wiki/%D0%93%D1%80%D1%8D%D0%BC,_%D0%91%D0%B5%D0%BD%D0%B4%D0%B6%D0%B0%D0%BC%D0%B8%D0%BD).
 
-# Build and Test
-TODO: Describe and show how to build your code and run the tests. 
+# Архитектура
+Текущая архитектура приложения состоит из трех микросервисов:
+1. Сбор акций и их метрик на основе [FMP API](https://financialmodelingprep.com/developer/docs/dashboard).
+2. Анализ метрик собранных данных для отбора акций соответствующих внутренним правилам отбора.
+3. Клиентское web приложение, показывающее отобранные акции.
 
-# Contribute
-TODO: Explain how other users and developers can contribute to make your code better. 
+## Диаграмма взаимодействия
+1. Сервис сбора акций загружает данные из financial data API и сохраняет в общий volume в json формате.
+2. Сервис анализа метрик акций считывает данные из общего volume и проводит отбор акций на основе внутренних правил.
+3. Сервис web ui получает данные из web api сервиса анализа акций по запросу пользователя.
 
-If you want to learn more about creating good readme files then refer the following [guidelines](https://docs.microsoft.com/en-us/azure/devops/repos/git/create-a-readme?view=azure-devops). You can also seek inspiration from the below readme files:
-- [ASP.NET Core](https://github.com/aspnet/Home)
-- [Visual Studio Code](https://github.com/Microsoft/vscode)
-- [Chakra Core](https://github.com/Microsoft/ChakraCore)
+::: mermaid
+graph TB;
+ subgraph pod
+  A[web ui] --> C[web api]
+  C --> D(volume)
+ E[stock data provider] --> D(volume)
+ end
+:::
+
+
+
+# Реализация
+- Приложение сделано в виде набора микросервисов, упакованных в docker контейнеры, что упрощает установку на любые платформы, где установлен [docker host](https://hub.docker.com/u/maximgrigorev).
+- Развертывание контейнеров реализовано посредством [docker compose](https://docs.docker.com/compose/), отвечающего за запуск мультиконтейнерного приложения.
+- Target OS: Linux.
+- Текущая реализация ограничена одним модулем, включающим набор контейнеров и общим хранилищем данных в рамках этого модуля.
+- Continues integration реализован посредством [Azure DevOps Pipelines](https://docs.microsoft.com/ru-ru/azure/devops/pipelines/get-started/what-is-azure-pipelines?view=azure-devops), стартующих во время чекина в бранчи кода.
+- Хранение кода в [Azure DevOps Repos](https://dev.azure.com/mgrigorieff/_git/FinanceMarketAnalysisApp).
+
+# Метрики отбора акций
+Критерии отбора Бенджамина Грэма позволяют выбрать те компании, акции которых не имеют сильной переоценки на рынке акций относительно реальной стоимости компании.
+1. Адекватный размер компании.
+Рыночная стоимость компании должна превышать $2 миллиарда.
+2. Устойчивое финансовое положение.
+Коэфициент текущих активов/текущим обязательствам больше или равен 2.
+3. Отсутствие убытков на протяжении последних 10 лет.
+Компания должна иметь положительную прибыль за 10 лет подряд.
+4. Дивидендная история.
+Компания должна выплачивать дивиденды на протяжении последних 10 лет.
+5. Рост прибыли.
+Компания должна увеличить показатель прибыли на акцию минимум на 1/3 за 10-летний период.
+6. Оптимальное значение коэффициента цена/прибыль ([P/E](https://ru.wikipedia.org/wiki/%D0%A1%D0%BE%D0%BE%D1%82%D0%BD%D0%BE%D1%88%D0%B5%D0%BD%D0%B8%D0%B5_%C2%AB%D1%86%D0%B5%D0%BD%D0%B0_%E2%80%94_%D0%BF%D1%80%D0%B8%D0%B1%D1%8B%D0%BB%D1%8C%C2%BB)).
+Текущая цена не должна первышать среднюю прибыль за посление три года более чем в 15 раз.
+7. Оптимальное значение коэффициента цена/балансовая стоимость [[P/B]](https://ru.wikipedia.org/wiki/%D0%A6%D0%B5%D0%BD%D0%B0_/_%D0%B1%D0%B0%D0%BB%D0%B0%D0%BD%D1%81%D0%BE%D0%B2%D0%B0%D1%8F_%D1%81%D1%82%D0%BE%D0%B8%D0%BC%D0%BE%D1%81%D1%82%D1%8C)
+Коэффициент цена/балансовая стоимость должен быть не выше 1.5.
+
+# Планы развития
+- Перенос приложения в Kubernetes.
+- Разнести микросервисы по разным модулям.
+- Реализовать взаимодействие через Kafka.
+- Перенести хранилище кэша данных из volume в postgree.
+- Сделать запуск сервиса Stock Data Provider в виде CronJob.
